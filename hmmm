@@ -87,8 +87,45 @@ local function updatePlayerCountNotification()
     end
 end
 
+local Toggle = Tab:CreateToggle({
+   Name = "Remove doors", 
+   CurrentValue = false,
+   Flag = "Toggle1", 
+   Callback = function(Value)
+       local door = game.Workspace:FindFirstChild("VW")
+       if door then
+           door = door:FindFirstChild("1")
+           if door then
+               door = door:FindFirstChild("NewDoorObject")
+           end
+       end
 
-
+       if Value then
+           -- Remove the door and save data
+           if door then
+               _G.SavedDoor = {
+                   Parent = door.Parent,
+                   Position = door:GetPivot(), -- Save position and orientation
+                   Clone = door:Clone() -- Store a clone of the door
+               }
+               door:Destroy()
+               print("NewDoorObject deleted and saved.")
+           else
+               print("NewDoorObject not found.")
+           end
+       else
+           -- Restore the door
+           if _G.SavedDoor and _G.SavedDoor.Clone then
+               local restoredDoor = _G.SavedDoor.Clone
+               restoredDoor.Parent = _G.SavedDoor.Parent
+               restoredDoor:PivotTo(_G.SavedDoor.Position) -- Restore position and orientation
+               print("NewDoorObject restored.")
+           else
+               print("No saved door to restore.")
+           end
+       end
+   end,
+})
 
 local Toggle = Tab:CreateToggle({
    Name = "Real time player count in server",
