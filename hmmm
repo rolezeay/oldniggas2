@@ -97,6 +97,41 @@ local function updatePlayerCountNotification()
     end
 end
 
+local Button = Tab:CreateButton({
+   Name = "Anti AFK (Credits: Zynlope - proxycat)",
+   Callback = function()
+       local antiAFK = false
+ antiAFK = not antiAFK
+       if antiAFK then
+           local player = game.Players.LocalPlayer
+           local playerHeadIcon = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png"
+
+           game.StarterGui:SetCore("SendNotification", {
+               Title = "Anti AFK",
+               Text = "Anti-AFK habilitado (enabled)",
+               Icon = playerHeadIcon,
+               Duration = 3,
+               Button1 = "ok"
+           })
+           local vu = game:GetService("VirtualUser")
+           game.Players.LocalPlayer.Idled:Connect(function()
+               vu:CaptureController()
+               vu:ClickButton2(Vector2.new(0, 0))
+           end)
+       else
+           local player = game.Players.LocalPlayer
+           local playerHeadIcon = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png"
+           game.StarterGui:SetCore("SendNotification", {
+               Title = "Anti AFK",
+               Text = "Anti-AFK desabilitado (disabled) (requer reinício para resetar conexão Idled)",
+               Icon = playerHeadIcon,
+               Duration = 3,
+               Button1 = "ok"
+           })
+       end
+   end,
+})
+
 local workspace = game:GetService("Workspace")
 local runService = game:GetService("RunService")
 
@@ -4217,6 +4252,41 @@ local function updatePlayerCountNotification()
         })
     end
 end
+
+local Button = Tab:CreateButton({
+   Name = "Anti AFK (Credits: Zynlope - proxycat)",
+   Callback = function()
+       local antiAFK = false
+ antiAFK = not antiAFK
+       if antiAFK then
+           local player = game.Players.LocalPlayer
+           local playerHeadIcon = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png"
+
+           game.StarterGui:SetCore("SendNotification", {
+               Title = "Anti AFK",
+               Text = "Anti-AFK habilitado (enabled)",
+               Icon = playerHeadIcon,
+               Duration = 3,
+               Button1 = "ok"
+           })
+           local vu = game:GetService("VirtualUser")
+           game.Players.LocalPlayer.Idled:Connect(function()
+               vu:CaptureController()
+               vu:ClickButton2(Vector2.new(0, 0))
+           end)
+       else
+           local player = game.Players.LocalPlayer
+           local playerHeadIcon = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. player.UserId .. "&width=420&height=420&format=png"
+           game.StarterGui:SetCore("SendNotification", {
+               Title = "Anti AFK",
+               Text = "Anti-AFK desabilitado (disabled) (requer reinício para resetar conexão Idled)",
+               Icon = playerHeadIcon,
+               Duration = 3,
+               Button1 = "ok"
+           })
+       end
+   end,
+})
 
 local workspace = game:GetService("Workspace")
 local runService = game:GetService("RunService")
