@@ -1,4 +1,3 @@
-
 local userId = game.Players.LocalPlayer.UserId
 
 if userId == 7264437267 or userId == 1505537066 then
