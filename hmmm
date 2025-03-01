@@ -3030,7 +3030,7 @@ local FlyKeybind = Tab:CreateKeybind({
 
 local Keybind = Tab:CreateKeybind({
     Name = "Tecla para Perder-se",
-    CurrentKeybind = "E", 
+    CurrentKeybind = "Q", 
     HoldToInteract = false,
     Flag = "KeybindLoseYourself",
     Callback = function(Keybind)
