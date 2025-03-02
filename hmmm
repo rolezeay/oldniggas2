@@ -312,7 +312,7 @@ end
 
 for _, line in ipairs(lines) do
     sendMessage(line)
-    wait(0) 
+    wait(0.1) 
 end
    end,
 })
@@ -342,7 +342,7 @@ end
 
 for _, line in ipairs(lines) do
     sendMessage(line)
-    wait(0) 
+    wait(0.1) 
 end
    end,
 })
