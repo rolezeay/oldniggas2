@@ -3434,44 +3434,51 @@ local Button = Tab:CreateButton({
 local Button = Tab:CreateButton({
    Name = "Load E to rewind character",
    Callback = function()
-      	   --[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
-local key = "E" --key to intiate the flashback. see https://create.roblox.com/docs/reference/engine/enums/KeyCode for an exhaustive list
-local flashbacklength = 60 --how long the flashback should be stored in approx seconds
-local flashbackspeed = 1 --how many frames to skip during flashback (set to 0 to disable)
+      local key = "E"
+local flashbacklength = 80
+local flashbackspeed = 1.5
 
-local name = game:GetService("RbxAnalyticsService"):GetSessionId() --unique id that games cannot access but does not change on subsequent executions (used for the name of the binded function)
-local frames,uis,LP,RS = {},game:GetService("UserInputService"),game:GetService("Players").LocalPlayer,game:GetService("RunService") --set some vars
+if not game:IsLoaded() then game.Loaded:Wait() end
 
-pcall(RS.UnbindFromRenderStep,RS,name) --unbind the function if previously binded
+local name = "FlashbackSystem"
+local frames, uis, LP, RS = {}, game:GetService("UserInputService"), game:GetService("Players").LocalPlayer, game:GetService("RunService")
+
+local VRService = game:GetService("VRService")
+if VRService.VREnabled then return end
+
+game:GetService("StarterPlayer").DevComputerMovementMode = Enum.DevComputerMovementMode.KeyboardMouse
+game:GetService("StarterPlayer").DevTouchMovementMode = Enum.DevTouchMovementMode.Thumbstick
+
+if not LP or not uis then return end
+
+pcall(RS.UnbindFromRenderStep, RS, name)
 
 local function getchar()
    return LP.Character or LP.CharacterAdded:Wait()
 end
 
-function gethrp(c) --gethrp ripped from my env script and stripped of arguments
-return c:FindFirstChild("HumanoidRootPart") or c.RootPart or c.PrimaryPart or c:FindFirstChild("Torso") or c:FindFirstChild("UpperTorso") or c:FindFirstChildWhichIsA("BasePart")
+function gethrp(c)
+   return c and (c:FindFirstChild("HumanoidRootPart") or c.RootPart or c.PrimaryPart or c:FindFirstChild("Torso") or c:FindFirstChild("UpperTorso") or c:FindFirstChildWhichIsA("BasePart"))
 end
 
-local flashback = {lastinput=false,canrevert=true}
+local flashback = { lastinput = false, canrevert = true }
 
-function flashback:Advance(char,hrp,hum,allowinput)
-   
-   if #frames>flashbacklength*60 then --make sure we don't have too much history
-       table.remove(frames,1)
+function flashback:Advance(char, hrp, hum, allowinput)
+   if not char or not hrp or not hum then return end
+   if #frames > flashbacklength * 60 then
+       table.remove(frames, 1)
    end
-   
+
    if allowinput and not self.canrevert then
        self.canrevert = true
    end
-   
-   if self.lastinput then --make sure platformstand goes back to normal
+
+   if self.lastinput then
        hum.PlatformStand = false
        self.lastinput = false
    end
-   
-   table.insert(frames,{
+
+   table.insert(frames, {
        hrp.CFrame,
        hrp.Velocity,
        hum:GetState(),
@@ -3480,26 +3487,29 @@ function flashback:Advance(char,hrp,hum,allowinput)
    })
 end
 
-function flashback:Revert(char,hrp,hum)
-   local num = #frames
-   if num==0 or not self.canrevert then --add to history and return if no history is present
+function flashback:Revert(char, hrp, hum)
+   if not char or not hrp or not hum or #frames == 0 or not self.canrevert then
        self.canrevert = false
-       self:Advance(char,hrp,hum)
+       self:Advance(char, hrp, hum)
        return
    end
-   for i=1,flashbackspeed do --skip frames (if enabled)
-       table.remove(frames,num)
-       num=num-1
+
+   local num = #frames
+   for i = 1, flashbackspeed do
+       table.remove(frames, num)
+       num = num - 1
    end
+   
    self.lastinput = true
    local lastframe = frames[num]
-   table.remove(frames,num)
+   table.remove(frames, num)
    hrp.CFrame = lastframe[1]
    hrp.Velocity = -lastframe[2]
    hum:ChangeState(lastframe[3])
-   hum.PlatformStand = lastframe[4] --platformstand to make flying look normal again
+   hum.PlatformStand = lastframe[4] 
+   
    local currenttool = char:FindFirstChildOfClass("Tool")
-   if lastframe[5] then --equip/unequip tools
+   if lastframe[5] then
        if not currenttool then
            hum:EquipTool(lastframe[5])
        end
@@ -3508,17 +3518,27 @@ function flashback:Revert(char,hrp,hum)
    end
 end
 
-local function step() --function that runs every frame
+local function step()
    local char = getchar()
    local hrp = gethrp(char)
-   local hum = char:FindFirstChildWhichIsA("Humanoid")
-   if uis:IsKeyDown(Enum.KeyCode[key]) then --begin flashback
-       flashback:Revert(char,hrp,hum)
+   local hum = char and char:FindFirstChildWhichIsA("Humanoid")
+   if not char or not hrp or not hum then return end
+   
+   if uis:IsKeyDown(Enum.KeyCode[key]) then
+       flashback:Revert(char, hrp, hum)
    else
-       flashback:Advance(char,hrp,hum,true)
+       flashback:Advance(char, hrp, hum, true)
+   end
+   
+   if uis:IsKeyDown(Enum.KeyCode[killKey]) then
+       RS:UnbindFromRenderStep(name)
+       script:Destroy()
    end
 end
-RS:BindToRenderStep(name,1,step) --finally, bind our function
+
+pcall(function()
+   RS:BindToRenderStep(name, 1, step)
+end)
    end,
 })
 
