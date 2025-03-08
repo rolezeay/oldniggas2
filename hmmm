@@ -828,7 +828,7 @@ end
 local function startFishing()
     while Toggle do
         -- Spawn 15 simultaneous operations for maximum performance boost
-        for _ = 1, 1500 do
+        for _ = 1, 1000 do
             spawn(function() 
                 equipAllTools()
             end)
@@ -853,7 +853,7 @@ local Button = Tab:CreateButton({
             while isSpamming do
                 -- Simulate Backspace key press
                 game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.Backspace, false, game)
-                wait(0) -- Delay between each drop, adjust as needed
+                wait(1) -- Delay between each drop, adjust as needed
             end
         end)
 
@@ -5005,7 +5005,7 @@ end
 local function startFishing()
     while Toggle do
         -- Spawn 15 simultaneous operations for maximum performance boost
-        for _ = 1, 1500 do
+        for _ = 1, 1000 do
             spawn(function() 
                 equipAllTools()
             end)
@@ -5030,7 +5030,7 @@ local Button = Tab:CreateButton({
             while isSpamming do
                 -- Simulate Backspace key press
                 game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.Backspace, false, game)
-                wait(0) -- Delay between each drop, adjust as needed
+                wait(1) -- Delay between each drop, adjust as needed
             end
         end)
 
