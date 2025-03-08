@@ -828,7 +828,7 @@ end
 local function startFishing()
     while Toggle do
         -- Spawn 15 simultaneous operations for maximum performance boost
-        for _ = 1, 500 do
+        for _ = 1, 1000 do
             spawn(function() 
                 equipAllTools()
             end)
