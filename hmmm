@@ -33,6 +33,8 @@ local function playOpeningSound()
     openingSound:Play()
 end
 
+
+
 playOpeningSound()
 local Window = Rayfield:CreateWindow({
    Name = "owner gui | " .. executorName .. " | " .. gameName,
@@ -865,8 +867,6 @@ local Section = Tab:CreateSection("Step 3 enjoy annoying teenager speds!")
 
 local Tab = Window:CreateTab("Meepcity", 126133429358591) -- Title, Image
 
-local Section = Tab:CreateSection("backyard teleporter. CREDITS: SEMNEXO")
-
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -885,7 +885,7 @@ local Input = Tab:CreateInput({
 
 -- Creating the teleport button
 local Button = Tab:CreateButton({
-   Name = "Teleport to backyard",
+   Name = "Teleport to User ID",
    Callback = function()
       if _G.StoredUserID then
          local success, err = pcall(function()
@@ -953,8 +953,6 @@ local CopyButton = Tab:CreateButton({
       end
    end,
 })
-
-local Section = Tab:CreateSection("teleport to anyones backyard with their user id.")
 
 local function colorToTable(clr)
     return {tostring(clr.R * 255), tostring(clr.G * 255), tostring(clr.B * 255)}
