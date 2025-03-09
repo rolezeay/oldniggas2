@@ -887,7 +887,7 @@ local Input = Tab:CreateInput({
 
 -- Creating the teleport button
 local Button = Tab:CreateButton({
-   Name = "Teleport to backyard,
+   Name = "Teleport to backyard",
    Callback = function()
       if _G.StoredUserID then
          local success, err = pcall(function()
