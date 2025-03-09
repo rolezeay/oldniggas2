@@ -867,8 +867,6 @@ local Section = Tab:CreateSection("Step 3 enjoy annoying teenager speds!")
 
 local Tab = Window:CreateTab("Meepcity", 126133429358591) -- Title, Image
 
-local Section = Tab:CreateSection("telepor to anyones backyard. CREDITS: SEMNEXO")
-
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
