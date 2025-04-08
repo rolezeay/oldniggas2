@@ -1,6 +1,6 @@
 local userId = game.Players.LocalPlayer.UserId
 
-if userId == 7264437267 or userId == 1505537066 or userId == 3214078392 or userId == 4220616428 then
+if userId == 7264437267 or userId == 1505537066 or userId == 3214078392 or userId == 4220616428 or userId == 6157390669 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/rolezeay/oldniggas3/refs/heads/main/hmmm"))()
 else
     loadstring(game:HttpGet("https://raw.githubusercontent.com/rolezeay/otheruser/refs/heads/main/hmmmm"))()
